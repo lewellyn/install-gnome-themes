@@ -1,11 +1,12 @@
 #!/bin/bash
 
 sudo dnf install \
-	git autoconf automake meson ninja-build parallel rubygem-sass sassc optipng \
+	git autoconf automake meson ninja-build pkgconfig parallel \
+	rubygem-sass sassc optipng \
 	libffi-devel gcc redhat-rpm-config \
-	inkscape \
+	inkscape gnome-desktop3 perl-XML-Twig bc \
 	gtk3-devel gdk-pixbuf2-xlib glib2-devel glib2 \
-	libxml2-devel librsvg2-devel \
+	libxml2-devel librsvg2-devel gnome-shell \
 	gnome-themes-standard gtk-murrine-engine gtk2-engines \
 	google-roboto-fonts google-noto-sans-fonts google-noto-mono-fonts
 
@@ -15,4 +16,4 @@ sudo dnf install \
 
 # Note: some operating systems come with the Numix theme pre-installed.
 # We will remove it to avoid conflict with our more up-to-date version.
-sudo dnf remove numix-gtk-theme
+rpm --quiet -qi numix-gtk-theme && sudo dnf remove numix-gtk-theme
