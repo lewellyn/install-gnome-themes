@@ -347,6 +347,8 @@ theme-mv-dir github logico-dev typewriter-gtk master Typewriter
 #       UNITED_GNOME_VARIANT=Manjaro \
 #       ./install-gnome-themes
 UNITED_GNOME_VARIANT=${UNITED_GNOME_VARIANT:-$OS}
+# Do case-correction on variant name
+[ "${UNITED_GNOME_VARIANT}" = "openSUSE" ] && UNITED_GNOME_VARIANT=Opensuse
 theme-script github godlyranchdressing United-GNOME master "
 tar xf Compiled.tar.gz &>> \"$LOG\" &&
 cp --recursive \"Compiled/United-$UNITED_GNOME_VARIANT/\"* \"$THEMES/\" &>> \"$LOG\"
