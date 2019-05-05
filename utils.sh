@@ -47,7 +47,19 @@ function os-name () {
 }
 
 function gnome-version () {
-	gnome-shell --version 2> /dev/null | cut --delimiter=' ' --fields=3 | cut --delimiter='.' --fields=1,2
+	# Version should be obtained from the installed XML file, if possible.
+	# It is generated as part of the configuration of gnome-common (upstream
+	# name, not package name); see the following file for current layout:
+	# https://gitlab.gnome.org/GNOME/gnome-desktop/blob/master/gnome-version.xml.in
+	if [ -f /usr/share/gnome/gnome-version.xml ]; then
+		echo "$(xml_grep 'platform' /usr/share/gnome/gnome-version.xml --text_only).$(xml_grep 'minor' /usr/share/gnome/gnome-version.xml --text_only)"
+	else
+		# Try to get the gnome-shell version as a fallback measure.
+		# As gnome-shell is a desktop component, its version may
+		# differ from the GNOME desktop's version. But it should be
+		# a reasonable approximation if we cannot get GNOME's version.
+		gnome-shell --version 2> /dev/null | cut --delimiter=' ' --fields=3 | cut --delimiter='.' --fields=1,2
+	fi
 }
 
 function gtk-version () {
