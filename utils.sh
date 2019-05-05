@@ -71,6 +71,9 @@ function gtk-version () {
 		VERSION=$(rpm-version gtk3)
 	fi
 	if [ -z "$VERSION" ]; then
+		VERSION=$(rpm-version libgtk-3-0)
+	fi
+	if [ -z "$VERSION" ]; then
 		VERSION=$(rpm-version gtk2)
 	fi
 	if [ -z  "$VERSION" ]; then
@@ -86,7 +89,7 @@ function dpkg-version () {
 
 function rpm-version () {
 	local PKG=$1
-	rpm --query --queryformat %{VERSION} "$PKG" 2> /dev/null | cut --delimiter='.' --fields=1,2
+	rpm -qi --quiet "$PKG" && rpm --query --queryformat %{VERSION} "$PKG" 2> /dev/null | cut --delimiter='.' --fields=1,2
 }
 
 function pacman-version () {
