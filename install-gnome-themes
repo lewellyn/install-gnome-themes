@@ -57,12 +57,11 @@ else
 	message "Detected GNOME $GNOME_VERSION, GTK $GTK_VERSION."
 fi
 
-if [ "$GTK_VERSION" != '3.30' ] &&
-   [ "$GTK_VERSION" != '3.28' ] &&
-   [ "$GTK_VERSION" != '3.26' ] &&
-   [ "$GTK_VERSION" != '3.24' ] &&
-   [ "$GTK_VERSION" != '3.22' ]; then
-	message "This script only support GTK versions 3.22 and up."
+GTK_MIN_VERSION=3.22
+GTK_MAX_VERSION=3.30
+
+if ! (( $(bc <<< "${GTK_MIN_VERSION} <= ${GTK_VERSION} && ${GTK_VERSION} <= ${GTK_MAX_VERSION}") )) ; then
+	message "This script only support GTK versions ${GTK_MIN_VERSION} and up."
 	exit 1
 fi
 
